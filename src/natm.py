@@ -31,8 +31,24 @@ class deleteU():
 		print ("do more")
 
 class login():
-	def getAccounts():
-		print ("Does something")
+	@staticmethod
+	def getAccounts(user):
+		f = open("uaf.txt", "r")
+		f1 = f.readlines()
+		
+		#reads uaf line by line and gets usernames
+		for x in f1:
+			#print (x[:15].strip())
+			if (user == x[:15].strip()):
+				print ("user is found")
+				return 1
+			
+		print ("user not found")
+		return 0
+			
+			
+		f.close()
+		
 		
 class logout():
 	def write_file():
@@ -47,9 +63,16 @@ class file_update():
 
 
 def main(): 
-	print("hello world")
 	
-	print ("hello world")
+	
+	print("Natm menu \n")
+	
+	hold = input ("login: ")
+	
+	log = login()
+	
+	log.getAccounts(hold)
+	
 	
 if __name__ == '__main__':
 	main()
