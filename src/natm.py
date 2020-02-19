@@ -33,12 +33,20 @@ class Ticket():
 
 
 class addcredit:
-	def add():
-		print("Does something")
-
-	def request():
-		print("do more")
-
+	'''
+	Writes addition to credits to dtf
+	XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
+	'''
+	@staticmethod
+	def add(credit, user):
+		f = open("txt_files/dtf.txt", "w")
+		f.write("06 " + "{:<15}".format(user.username) + " AA " + "{:<9}".format(credit))
+		f.close()
+	@staticmethod
+	def request(credit,user):
+		f = open("txt_files/dtf.txt", "w")
+		f.write("06 " + "{:<15}".format(user) + " " + user.role + " " + "{:<9}".format(credit))
+		f.close()
 
 class sell:
 	def sell():
