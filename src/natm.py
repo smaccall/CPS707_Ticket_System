@@ -106,8 +106,6 @@ class addcredit:
 	Writes addition to credits to dtf
 	XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
 	'''
-
-
     @staticmethod
     def add(user):
         f = open("txt_files/dtf.txt", "w")
@@ -117,12 +115,20 @@ class addcredit:
         account.credit = account.credit + credit
         f.write("06 " + "{:<15}".format(user.username) + " AA " + "{:<9}".format(credit))
         f.close()
+        with open("txt_file/uaf.txt", "r") as f:
+            lines = f.readlines()
+        with open("txt_file/uaf.txt", "w") as f:
+            for line in lines:
+                if line[:15].strip() != account.username:
+                    f.write(line)
+            f.write("{:<15}".format(account.username) + " " + account.role + " " + "{:<9}".format(account.credit))
+            f.close()
 
     @staticmethod
     def request(user):
         f = open("txt_files/dtf.txt", "w")
         credit = input("Enter the amount of credit")
-        f.write("06 " + "{:<15}".format(user.username) + " " + user.role + " " + "{:<9}".format(credit))
+        f.write("07 " + "{:<15}".format(user.username) + " " + user.role + " " + "{:<9}".format(credit))
         f.close()
 
 
@@ -172,27 +178,25 @@ class User:
     @staticmethod
     def refund(user):
         file1 = open("txt_files/dtf.txt", "a")
-        f = open("txt_files/uaf.txt", "r")
         buyer = input("Enter the seller's username: ")
         seller = input("Enter the seller's username: ")
-        exist = False
-        for user in f:
-            if user[0:15].strip() == buyer:
-                exist = True
-        for user in f:
-            if user[0:15].strip() == seller:
-                exist = True
-        if exist == False:
-            print("Invalid, users do not exist")
-            break
-        refundAmount = input("Enter the amount to refund: ")
         userB = Login.getAccounts(buyer)
         userS = Login.getAccounts(seller)
-        userS.credit = userS.credit - refundAmount
-        userB.credit = userB.credit + refundAmount
-        file1.write("05 " + "{:<15}".format(buyer) + "{:<15}".format(seller) + "{:<9}".format(refundAmount))
-        f.close()
-        file1.close()
+        if not (userB == 0 or userS == 0):
+            refundAmount = input("Enter the amount to refund: ")
+            userS.credit = userS.credit - refundAmount
+            userB.credit = userB.credit + refundAmount
+            file1.write("05 " + "{:<15}".format(buyer) + "{:<15}".format(seller) + "{:<9}".format(refundAmount))
+            file1.close()
+            with open("txt_file/uaf.txt", "r") as f:
+                lines = f.readlines()
+            with open("txt_file/uaf.txt", "w") as f:
+                for line in lines:
+                    if line[:15].strip() != userB or line[:15].strip() != userS:
+                        f.write(line)
+                f.write("{:<15}".format(userB.username) + " " + userB.role + " " + "{:<9}".format(userB.credit))
+                f.write("{:<15}".format(userS.username) + " " + userS.role + " " + "{:<9}".format(userS.credit))
+                f.close()
 
 
 class Login:
@@ -212,7 +216,6 @@ class Login:
 
         # reads uaf line by line and gets usernames
         for x in f1:
-            # print (x[:15].strip())
             if user == x[:15].strip():
                 role = x[16:18]
                 credit = x[19:]
@@ -223,6 +226,7 @@ class Login:
         print("User not found")
         f.close()
         return 0
+
 
 def main():
     print("N.A.T.M Menu \n")
@@ -258,16 +262,13 @@ def main():
             else:
                 print("Access denied.")
         elif action == "addcredit":
-            if current_user.role == "AA":
+            second_action = input("add or request: ")
+            if second_action == "add" and current_user.role == "AA":
                 addcredit.add(current_user)
-            else:
-                print("Access denied.")
-        elif action == "addcredit":
-            if current_user.role == "FS" or current_user.role == "BS":
+            elif second_action == "request":
                 addcredit.request(current_user)
             else:
                 print("Access denied.")
-
         else:
             print("Invlaid option, try again.")
 
