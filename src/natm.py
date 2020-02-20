@@ -199,6 +199,7 @@ class User:
         self.username = username
         self.role = role
         self.credit = credit
+
     '''
     Logs the user action of logging out in dtf.txt
     
@@ -323,9 +324,9 @@ class Login:
             if user == x[:15].strip():
                 role = x[16:18]
                 credit = x[19:]
-                user1 = User(user, role, credit)
+                new_user = User(user, role, credit)
                 f.close()
-                return user1
+                return new_user
 
         print("User not found")
         f.close()
