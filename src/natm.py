@@ -1,4 +1,11 @@
+'''
+Not another Ticket Master is a ticketing service that manages transactions between buyers and sellers for events. Buyers
+    buy tickets from multiple vendors and are also able to request a refund. Sellers are able to market their tickets
+    for the price they want to sell at their convenience. Admins are around to monitor priviledged transactions.
 
+@author: Sarah MacCallum, Vinh Nguyen, Nikola Pavlovic
+@version: 1.0
+'''
 class Ticket:
     '''
     A class to model a Ticket object and its associated properties such as event title, sale price of ticket, number of tickets, and sellers username.
@@ -133,15 +140,14 @@ class Ticket:
 
 
 class addcredit:
-    '''
-	Writes updates credit amount of a user to dtf.txt
+    """
+    Writes updates credit amount of a user to dtf.txt
     Priviledge action
-	XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
-    
+    XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
+
     @param user
     @return null
-	'''
-
+    """
     @staticmethod
     def add(user):
         f = open("txt_files/dtf.txt", "w")
@@ -255,7 +261,6 @@ class User:
             f.close()
     
     '''
-    
     Takes in user object as account processing transaction
     Prompts user for buyer and seller name to refund/ transfer credits between accounts
     
