@@ -107,16 +107,22 @@ class addcredit:
 	XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
 	'''
 
+
     @staticmethod
-    def add(credit, user):
+    def add(user):
         f = open("txt_files/dtf.txt", "w")
+        credit = input("Enter the amount of credit")
+        uName = input("Enter the username for where to transfer credit")
+        account = Login.getAccounts(uName)
+        account.credit = account.credit + credit
         f.write("06 " + "{:<15}".format(user.username) + " AA " + "{:<9}".format(credit))
         f.close()
 
     @staticmethod
-    def request(credit, user):
+    def request(user):
         f = open("txt_files/dtf.txt", "w")
-        f.write("06 " + "{:<15}".format(user) + " " + user.role + " " + "{:<9}".format(credit))
+        credit = input("Enter the amount of credit")
+        f.write("06 " + "{:<15}".format(user.username) + " " + user.role + " " + "{:<9}".format(credit))
         f.close()
 
 
@@ -165,7 +171,28 @@ class User:
 
     @staticmethod
     def refund(user):
-        print("SOMETHING")
+        file1 = open("txt_files/dtf.txt", "a")
+        f = open("txt_files/uaf.txt", "r")
+        buyer = input("Enter the seller's username: ")
+        seller = input("Enter the seller's username: ")
+        exist = False
+        for user in f:
+            if user[0:15].strip() == buyer:
+                exist = True
+        for user in f:
+            if user[0:15].strip() == seller:
+                exist = True
+        if exist == False:
+            print("Invalid, users do not exist")
+            break
+        refundAmount = input("Enter the amount to refund: ")
+        userB = Login.getAccounts(buyer)
+        userS = Login.getAccounts(seller)
+        userS.credit = userS.credit - refundAmount
+        userB.credit = userB.credit + refundAmount
+        file1.write("05 " + "{:<15}".format(buyer) + "{:<15}".format(seller) + "{:<9}".format(refundAmount))
+        f.close()
+        file1.close()
 
 
 class Login:
@@ -223,6 +250,21 @@ def main():
         elif action == "deleteaccount":
             if current_user == "AA":
                 User.delete(current_user)
+            else:
+                print("Access denied.")
+        elif action == "refund":
+            if current_user.role == "AA":
+                User.refund(current_user)
+            else:
+                print("Access denied.")
+        elif action == "addcredit":
+            if current_user.role == "AA":
+                addcredit.add(current_user)
+            else:
+                print("Access denied.")
+        elif action == "addcredit":
+            if current_user.role == "FS" or current_user.role == "BS":
+                addcredit.request(current_user)
             else:
                 print("Access denied.")
 
