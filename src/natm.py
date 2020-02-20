@@ -287,8 +287,7 @@ class User:
 
 
 class Login:
-
-     """
+    """
     Initalizes login sequence, asking user for username as input and returing the current user as object
     
     @return current_user
@@ -302,7 +301,7 @@ class Login:
             current_user = Login.getAccounts(user)
         return current_user
 
-     '''
+    '''
     Given the username, this method will search through the uaf.txt to find and return 
     user account as an object
     
@@ -326,7 +325,6 @@ class Login:
         print("User not found")
         f.close()
         return 0
-
 
 def main():
     print("N.A.T.M Menu \n")
