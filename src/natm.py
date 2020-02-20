@@ -118,16 +118,6 @@ class addcredit:
 		f.write("06 " + "{:<15}".format(user) + " " + user.role + " " + "{:<9}".format(credit))
 		f.close()
 
-
-class sell:
-	def sell():
-		print("Does something")
-
-
-class buy:
-	def buy():
-		print("Does something")
-
 class User:
 	def __init__(self, username, role, credit):
 		self.username = username
@@ -162,6 +152,10 @@ class User:
 		f = open("txt_files/dtf.txt", "w")
 		f.write("02 " + "{:<15}".format(self.username) + " " + self.role + " " + "{:<9}".format(self.credit))
 		f.close()
+	
+	@staticmethod
+	def refund(user):
+		print("SOMETHING")
 
 class Login:
 	@staticmethod
@@ -225,7 +219,6 @@ def main():
 
 		else:
 			print("Invlaid option, try again.")
-
 
 		action = input("Enter a command (logout, addcredit, createaccount, deleteaccount, buy, sell, refund)")
 
