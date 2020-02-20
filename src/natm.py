@@ -1,14 +1,24 @@
 
 class Ticket:
     '''
-	A class to model a Ticket object and its associated properties such as event title, sale price of ticket, number of tickets, and sellers username.
-	'''
+    A class to model a Ticket object and its associated properties such as event title, sale price of ticket, number of tickets, and sellers username.
+    '''
 
+    '''
+    The constructor for a Ticket object
+    
+    :param self
+    :param eventTitle
+    :param salePrice
+    :param numOfTickets
+    :param sellerName
+    :param buyOrSell
+    '''
     def __init__(self, eventTitle, salePrice, numOfTickets, sellerName, buyOrSell):
         '''
-		Ticket(str, int, int, str, int)
-		Creates a Ticket object with the given event name, sale price, number of tickets for sale, and the sellers username.
-		'''
+        Ticket(str, int, int, str, int)
+        Creates a Ticket object with the given event name, sale price, number of tickets for sale, and the sellers username.
+        '''
         # Private instance variables for class Ticket
         self.__eTitle = eventTitle
         self.__sPrice = salePrice
@@ -18,12 +28,13 @@ class Ticket:
 
     def __str__(self):
         '''
-		T.__str__() or str(T)  --> str
-		Returns a str representation of this Ticket for the available tickets file and daily transaction file, depends on buyOrSell field:
-		3: "03_EEEEEEEEEEEEEEEEEEE_SSSSSSSSSSSSS_TTT_PPPPPP"
-		4: "04_EEEEEEEEEEEEEEEEEEE_SSSSSSSSSSSSS_TTT_PPPPPP"
-		0: "EEEEEEEEEEEEEEEEEEE_SSSSSSSSSSSSS_TTT_PPPPPP"
-		'''
+        T.__str__() or str(T)  --> str
+        Returns a str representation of this Ticket for the available tickets file and daily transaction file, depends on buyOrSell field:
+        3: "03_EEEEEEEEEEEEEEEEEEE_SSSSSSSSSSSSS_TTT_PPPPPP"
+        4: "04_EEEEEEEEEEEEEEEEEEE_SSSSSSSSSSSSS_TTT_PPPPPP"
+        0: "EEEEEEEEEEEEEEEEEEE_SSSSSSSSSSSSS_TTT_PPPPPP"
+        '''
+
         # If statements for which str representation, if its buy, sell or just for available tickets file
         if self.__bOrS == "3":
             return "03 {} {} {} {}".format(self.__eTitle, self.__sName, self.__numOfTickets, self.__sPrice)
@@ -32,72 +43,91 @@ class Ticket:
         else:
             return "{} {} {} {}".format(self.__eTitle, self.__sName, self.__numOfTickets, self.__sPrice)
 
-    # Sell method
+    '''
+    User is adding tickets to sell and is being stored in atf.txt
+    
+    :param User
+    '''
     @staticmethod
     def sell(user):
+        # open both dtf.txt and atf.txt
         file1 = open("dtf.txt", "a")
         file2 = open("atf.txt", "a")
+        # Retrieve input from user for event title, sale price and number of tickets available
         eTitle = input("Enter event title: ")
         salePrice = input("Enter sale price of one ticket: ")
         numOfTickets = input("Enter the number of tickets for sale: ")
+        # Check to see if all input values are valid
         if numOfTickets < 101 and salePrice < 1000 and len(eTitle) < 26:
-            # Need to somehow get user logged in for seller name part
+            # Create ticket object for sale records in dtf.txt
             T1 = Ticket(eTitle, salePrice, numOfTickets, user.username, 3)
-            # Create ticket entry for available tickets file as well
+            # Create ticket object for atf.txt
             T2 = Ticket(eTitle, salePrice, numOfTickets, user.username, 0)
-            file1.write("\n")
-            file1.write(str(T1))
-            file2.write("\n")
-            file2.write(str(T2))
+            file1.write("\n" + str(T1))
+            file2.write("\n" + str(T2))
         else:
             print("Invalid inputs.")
         file1.close()
         file2.close()
 
-    # Buy method
+    '''
+    User is buying tickets for an event
+    
+    :param User
+    '''
+
     @staticmethod
     def buy(user):
         file1 = open("dtf.txt", "a")
         file2 = open("atf.txt", "a")
+        # Retrieve input from user for ticket they want to buy
         eTitle = input("Enter event title: ")
         sellerName = input("Enter the seller's username: ")
         exist = False
         confirmation = ""
+        # Check to see if the ticket they want exists
         for ticket in file2:
             matchT = ticket[:25].strip()
             matchS = ticket[26:41].strip()
+            # If the event title and seller name are correct move forward in th ebuying process
             if matchT.lower() == eTitle.lower() and matchS.lower() == sellerName.lower():
                 exist = True
+                # Create ticket object for easier access to values
                 T = Ticket(matchT, matchS, ticket[42:45].strip(), ticket[46:].strip(), 4)
+                # Get number of tickets wanted from user
                 numOfTickets = input("Enter number of tickets: ")
+                # Verify amount is valid for user requesting
                 if not user.account == "AA":
                     if numOfTickets > 4:
                         print("Invalid number of tickets")
                         break
+                # Check to see if there are enough tickets for sale
                 if numOfTickets > T.__numOfTickets:
                     print("Not enough tickets for sale.")
                     break
+                # Calculate final cost
                 total = numOfTickets * T.__sPrice
-                confirmation = input(
-                    "Single ticket: $" + T.__sPrice + " | Total price is: $" + total + ". Confirm yes/no: ")
+                confirmation = input("Single ticket: $" + T.__sPrice + " | Total price is: $"
+                                     + total + ". Confirm yes/no: ")
+                # Don't proceed if user does not confirm
                 if confirmation.lower() == "no":
                     print("Transaction cancelled")
                     break
-                # Need to somehow subtract number of tickets from available tickets file
                 file1.write("\n")
                 file1.write(str(T))
                 file1.close()
                 file2.close()
+                # Update atf.txt file with the correct amount of tickets available
+                with open("txt_file/atf.txt", "r") as f:
+                    lines = f.readlines()
+                with open("txt_file/atf.txt", "w") as f:
+                    for line in lines:
+                        if line.strip("\n") != T.__str__()[3:]:
+                            f.write(line)
+                    T.__numOfTickets = T.__numOfTickets - numOfTickets
+                    f.write(T.__str__()[3:])
                 break
-        if confirmation.lower() == "yes":
-            with open("txt_file/atf.txt", "r") as f:
-                lines = f.readlines()
-            with open("txt_file/atf.txt", "w") as f:
-                for line in lines:
-                    if line.strip("\n") != T.__str__()[3:]:
-                        f.write(line)
-                T.__numOfTickets = T.__numOfTickets - numOfTickets
-                f.write(T.__str__()[3:])
+        # User asked for a ticket that is not in the system
         if not exist:
             print("Ticket not found")
 
@@ -111,15 +141,20 @@ class addcredit:
     @param user
     @return null
 	'''
+
     @staticmethod
     def add(user):
         f = open("txt_files/dtf.txt", "w")
+        # Get amount of credit being added and to which account
         credit = input("Enter the amount of credit")
         uName = input("Enter the username for where to transfer credit")
         account = Login.getAccounts(uName)
+        # Update amount of credit user has available
         account.credit = account.credit + credit
+        # Record transaction in dtf.txt
         f.write("06 " + "{:<15}".format(user.username) + " AA " + "{:<9}".format(credit))
         f.close()
+        # Update uaf.txt file with the users new available credit amount
         with open("txt_file/uaf.txt", "r") as f:
             lines = f.readlines()
         with open("txt_file/uaf.txt", "w") as f:
