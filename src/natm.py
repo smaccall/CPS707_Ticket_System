@@ -1,3 +1,4 @@
+
 class Ticket:
     '''
 	A class to model a Ticket object and its associated properties such as event title, sale price of ticket, number of tickets, and sellers username.
@@ -103,8 +104,12 @@ class Ticket:
 
 class addcredit:
     '''
-	Writes addition to credits to dtf
+	Writes updates credit amount of a user to dtf.txt
+    Priviledge action
 	XX_UUUUUUUUUUUUUUU_TT_CCCCCCCCC
+    
+    @param user
+    @return null
 	'''
     @staticmethod
     def add(user):
@@ -123,7 +128,13 @@ class addcredit:
                     f.write(line)
             f.write("{:<15}".format(account.username) + " " + account.role + " " + "{:<9}".format(account.credit))
             f.close()
-
+    
+    '''
+    Creates a request log in the dtf.txt 
+    
+    @param user
+    @return null
+    '''
     @staticmethod
     def request(user):
         f = open("txt_files/dtf.txt", "w")
@@ -133,16 +144,40 @@ class addcredit:
 
 
 class User:
+    
+    '''
+    Contructor class
+    
+    @param self
+    @param username
+    @param role
+    @param credit
+    @return
+    '''
     def __init__(self, username, role, credit):
         self.username = username
         self.role = role
         self.credit = credit
-
+    '''
+    Logs the user action of logging out in dtf.txt
+    
+    @param self
+    @return null
+    '''
+    @staticmethod
     def logout(self):
         f = open("txt_files/dtf.txt", "w")
         f.write("00 " + "{:<15}".format(self.username) + " " + self.role + " " + "{:<9}".format(self.credit))
         f.close()
 
+    '''
+    promts user for username, account type and credit amount
+    checks if the user already exists
+    creates and logs new user into dtf.txt and uaf.txt
+    
+    @param self
+    @return null
+    '''
     def create(self):
         name = input("Username: ")
         aType = input("Account Type: ")
@@ -159,7 +194,16 @@ class User:
             f = open("txt_files/dtf.txt", "w")
             f.write("01 " + "{:<15}".format(self.username) + " " + self.role + " " + "{:<9}".format(self.credit))
         f.close()
-
+    
+    '''
+    Prompts user for an account username to delete
+    updates uaf.txt to remove account from listing
+    logs action in dtf.txt
+    Can only be done from a priviledged account type
+    
+    @param null
+    @return null
+    '''
     def delete(self):
         name = input("Username: ")
         account = Login.getAccounts(name)
@@ -174,7 +218,15 @@ class User:
             f = open("txt_files/dtf.txt", "w")
             f.write("02 " + "{:<15}".format(self.username) + " " + self.role + " " + "{:<9}".format(self.credit))
             f.close()
-
+    
+    '''
+    
+    Takes in user object as account processing transaction
+    Prompts user for buyer and seller name to refund/ transfer credits between accounts
+    
+    @param user
+    @return null
+    '''
     @staticmethod
     def refund(user):
         file1 = open("txt_files/dtf.txt", "a")
@@ -200,6 +252,12 @@ class User:
 
 
 class Login:
+
+     """
+    Initalizes login sequence, asking user for username as input and returing the current user as object
+    
+    @return current_user
+    """
     @staticmethod
     def login():
         user = input("login: ")
@@ -209,6 +267,13 @@ class Login:
             current_user = Login.getAccounts(user)
         return current_user
 
+     '''
+    Given the username, this method will search through the uaf.txt to find and return 
+    user account as an object
+    
+    @param user
+    @return user1
+    '''
     @staticmethod
     def getAccounts(user):
         f = open("txt_files/uaf.txt", "r")
