@@ -134,10 +134,16 @@ class User:
 		aType = input("Account Type: ")
 		credit = input("Starting Credit")
 		f = open("txt_files/uaf.txt", "w")
-		f.write("{:<15}".format(name) + " " + aType + " " + "{:<9}".format(credit))
-		f.close()
-		f = open("txt_files/dtf.txt", "w")
-		f.write("01 " + "{:<15}".format(self.username) + " " + self.role + " " + "{:<9}".format(self.credit))
+		exist = False
+		for user in f:
+			if user[0:15].strip() == name:
+				exist = True
+				print("User already exists.")
+		if not exist:
+			f.write("{:<15}".format(name) + " " + aType + " " + "{:<9}".format(credit))
+			f.close()
+			f = open("txt_files/dtf.txt", "w")
+			f.write("01 " + "{:<15}".format(self.username) + " " + self.role + " " + "{:<9}".format(self.credit))
 		f.close()
 
 	def delete(self):
