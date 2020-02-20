@@ -2,12 +2,12 @@
 
 Complete in this order:
 
-~~Main
+~~Main~~
 
-~~User
+~~User~~
 
-~~Login
+~~Login~~
 
-~~Logout
+~~Logout~~
 
 Any order for the rest
