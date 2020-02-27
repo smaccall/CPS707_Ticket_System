@@ -1,13 +1,13 @@
 # CPS707_Ticket_System
 
-Complete in this order:
+Fix code to accept files from command line
 
-~~Main~~
+Set up automation Script to run input files
 
-~~User~~
+Validate the output files with expected files
 
-~~Login~~
+Create table stating observed failures
 
-~~Logout~~
+Fix failures in code
 
-Any order for the rest
+Test again
