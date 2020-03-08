@@ -1,0 +1,5 @@
+
+06 username2       BS 001000.00
+00 username4       AA 500000.00
+
+06 username2       BS 000500.00

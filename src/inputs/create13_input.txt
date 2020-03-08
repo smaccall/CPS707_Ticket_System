@@ -1,0 +1,6 @@
+login
+admin1
+createaccount
+usertest321
+full-standard
+EXIT

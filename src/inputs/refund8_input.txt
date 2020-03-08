@@ -1,0 +1,7 @@
+login
+admin1
+refund
+username1
+username4
+20000000.00
+EXIT

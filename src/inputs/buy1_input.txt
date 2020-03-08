@@ -1,0 +1,4 @@
+Login
+admin1
+Buy
+EXIT

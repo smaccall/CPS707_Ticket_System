@@ -1,0 +1,7 @@
+login
+admin1
+createaccount
+admin1
+admin
+50.00
+EXIT

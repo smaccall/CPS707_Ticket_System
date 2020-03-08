@@ -1,0 +1,14 @@
+Login
+username4
+addcredit 
+add
+1000
+username2
+Logout
+Login
+username4
+addcredit 
+add
+500
+username2
+EXIT

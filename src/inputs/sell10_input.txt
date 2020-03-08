@@ -1,0 +1,9 @@
+Login
+admin1
+Sell
+Little House 5
+15.00
+10
+Buy
+Little House 5
+EXIT

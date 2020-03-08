@@ -1,0 +1,7 @@
+login
+admin1
+refund
+username1
+nomoney
+200.00
+EXIT

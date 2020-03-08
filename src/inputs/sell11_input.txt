@@ -1,0 +1,15 @@
+Login
+admin1
+Sell
+Cars 4
+15.00
+10
+Logout
+Login
+admin1
+Buy
+Cars 4
+admin1
+5
+Yes
+EXIT

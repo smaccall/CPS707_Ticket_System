@@ -1,0 +1,7 @@
+Login
+username4
+addcredit 
+add
+1000
+username2
+EXIT

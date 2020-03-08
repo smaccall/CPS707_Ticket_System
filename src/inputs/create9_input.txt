@@ -1,0 +1,5 @@
+login
+admin1
+createaccount
+test12345678901234
+EXIT

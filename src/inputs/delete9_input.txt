@@ -1,0 +1,8 @@
+login
+admin1
+deleteaccount
+username1
+buy
+concert2
+username1
+EXIT

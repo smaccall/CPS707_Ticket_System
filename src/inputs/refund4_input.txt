@@ -1,0 +1,6 @@
+login
+admin1
+refund
+failure
+admin1
+EXIT

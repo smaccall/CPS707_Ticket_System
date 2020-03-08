@@ -1,0 +1,6 @@
+login
+admin1
+refund
+username1
+noone
+EXIT

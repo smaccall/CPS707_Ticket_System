@@ -1,0 +1,4 @@
+login
+username1
+createaccount
+EXIT

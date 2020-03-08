@@ -1,0 +1,5 @@
+login
+admin1
+deleteaccount
+username1
+EXIT

@@ -1,0 +1,15 @@
+Login
+username1
+Sell
+Little House 5
+15.00
+10
+Logout
+Login
+username1
+Buy
+Little House 5
+username1
+1
+Yes
+EXIT

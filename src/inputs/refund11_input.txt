@@ -1,0 +1,8 @@
+login
+admin1
+refund
+username2
+username3
+200.00
+logout
+EXIT

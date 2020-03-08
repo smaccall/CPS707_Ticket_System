@@ -1,0 +1,7 @@
+login
+admin1
+createaccount
+success2
+buy-standard
+500.00
+EXIT

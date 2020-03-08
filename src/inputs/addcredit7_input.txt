@@ -1,0 +1,6 @@
+Login
+username3
+addcredit
+request
+500
+EXIT
