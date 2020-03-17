@@ -16,9 +16,7 @@ public class Main {
 				String hold = scanner.nextLine();
 				Updater up = new Updater();
 				
-				if(hold.substring(0,2).equals("01")){
-					
-				} else if (hold.substring(0,2).equals("01")) {
+				if (hold.substring(0,2).equals("01")) {
 					up.create(hold);
 				} else if (hold.substring(0,2).equals("02")) {
 					up.delete(hold);
@@ -43,18 +41,39 @@ public class Main {
 			
 		} catch (FileNotFoundException ex) {
 			System.out.print("File not found");
-		}
-		
-	}
+		} catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
 
 }
 
 class Updater {
-	public void addC(String in){
+    //06 clause
+	public void addC(String input) throws  IOException {
 		//uaf
+        String nameB = input.substring(3,19).strip();
+        String roleB = input.substring(19,22).strip();
+        String amountB = input.substring(22,31).strip();
+        Scanner s = new Scanner((new File("uaf.txt")));
+        FileWriter fw = new FileWriter("uaf.txt");
+        while (s.hasNextLine()){
+            String output = s.nextLine();
+            if (output.substring(0,16).equals(nameB)){
+                Float total = Float.parseFloat(output.substring(20,29)) + Float.parseFloat(amountB);
+                fw.write(String.format("%-15d", nameB) + " " + roleB + " " + String.format("%09d", Float.toString(total)));
+            } else {
+                fw.write(output);
+            }
+        }
+        fw.close();
+        s.close();
+
 	}
 	public void requestC(String in){
-		//uaf
+		//nothing :)
+
 	}
 	public void buy(String in){
         //atf
