@@ -187,9 +187,35 @@ class Updater {
 	}
 	public void create(String in){
 		//uaf
+        
 	}
-	public void delete(String in){
+	public void delete(String input) throws IOException{
 		//uaf atf
+        //uaf
+        String nameB = input.substring(3,19).strip();
+        Scanner s = new Scanner((new File("uaf.txt")));
+        FileWriter fw = new FileWriter("uaf.txt");
+        Scanner s2 = new Scanner((new File("atf.txt")));
+        FileWriter fw2 = new FileWriter("atf.txt");
+        while (s.hasNextLine()){
+            String output = s.nextLine();
+            if (output.substring(0,16).equals(nameB)){
+               //do nothing
+            } else {
+                fw.write(output);
+            }
+        }
+        while (s2.hasNextLine()) {
+            String output2 = s2.nextLine();
+            if (!output2.substring(21,34).equals(nameB))
+                fw2.write(output2);
+        }
+        fw.close();
+        s.close();
+
+        //atf
+
+
 	}
 	public void refund(String in){
 		//uaf
