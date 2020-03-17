@@ -67,6 +67,7 @@ class Updater {
             int numTickets = Integer.parseInt(numTicketsStr);
             //String priceTicketStr = in.substring(42,48).trim();
             //int priceTicket = Integer.parseInt(priceTicketStr);  
+            String newLine = "";
             while (s.hasNextLine())
             {
                 String temp = s.nextLine();
@@ -78,7 +79,7 @@ class Updater {
                     int atfnumTickets = Integer.parseInt(atfnumTicketsStr);
                     String atfpriceTicketStr = temp.substring(39,45).trim();
                     int newTotal = atfnumTickets - numTickets;
-                    String newLine = atfETitle + atfSName + newTotal + atfpriceTicketStr;
+                    newLine = atfETitle + atfSName + newTotal + atfpriceTicketStr;
                     break;
                     //int atfpriceTicket = Integer.parseInt(atfpriceTicketStr);
                     
@@ -103,6 +104,7 @@ class Updater {
             String priceTicketStr = in.substring(42,48).trim();
             int priceTicket = Integer.parseInt(priceTicketStr); 
             int totalCredit = numTickets * priceTicket; 
+            String newLine = "";
             while (s.hasNextLine())
             {
                 String temp = s.nextLine();
@@ -113,7 +115,7 @@ class Updater {
                     String utfCreditsStr = temp.substring(20,28).trim();
                     int utfCredits = Integer.parseInt(utfCreditsStr);
                     int newTotal = utfCredits + totalCredit;
-                    String newLine = utfSName + utfType + newTotal;
+                    newLine = utfSName + utfType + newTotal;
                     break;
                     //int atfpriceTicket = Integer.parseInt(atfpriceTicketStr);
                     
@@ -136,6 +138,7 @@ class Updater {
             String sName = in.substring(23,37).trim();
             String numTicketsStr = in.substring(38,41).trim();
             int numTickets = Integer.parseInt(numTicketsStr);
+            String newLine = "";
             //String priceTicketStr = in.substring(42,48).trim();
             //int priceTicket = Integer.parseInt(priceTicketStr);  
             while (s.hasNextLine())
@@ -149,7 +152,7 @@ class Updater {
                     int atfnumTickets = Integer.parseInt(atfnumTicketsStr);
                     String atfpriceTicketStr = temp.substring(39,45).trim();
                     int newTotal = atfnumTickets + numTickets;
-                    String newLine = atfETitle + atfSName + newTotal + atfpriceTicketStr;
+                    newLine = atfETitle + atfSName + newTotal + atfpriceTicketStr;
                     break;
                     //int atfpriceTicket = Integer.parseInt(atfpriceTicketStr);
                     
@@ -171,15 +174,13 @@ class Updater {
 	}
 	public void refund(String in){
 		//uaf
+		
     }
     static void modifyFile(String filePath, String oldString, String newString)
     {
-        File fileToBeModified = new File(filePath);
-         
+        File fileToBeModified = new File(filePath); 
         String oldContent = "";
-         
         BufferedReader reader = null;
-         
         FileWriter writer = null;
          
         try
@@ -187,13 +188,10 @@ class Updater {
             reader = new BufferedReader(new FileReader(fileToBeModified));
              
             //Reading all the lines of input text file into oldContent
-             
             String line = reader.readLine();
-             
             while (line != null) 
             {
                 oldContent = oldContent + line + System.lineSeparator();
-                 
                 line = reader.readLine();
             }
              
