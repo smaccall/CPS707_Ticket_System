@@ -99,8 +99,9 @@ class Updater {
 	}
 	/**
 	 * @param input
+	 * @throws IOException 
 	 */
-	public void buy(String in){
+	public void buy(String in) throws IOException{
 		// update the atf file with the new amount of available tickets
 		// update the uaf with buyers new credit amount
         try {
@@ -162,8 +163,9 @@ class Updater {
 	
 	/**
 	 * @param input
+	 * @throws IOException 
 	 */
-	public void sell(String in){
+	public void sell(String in) throws IOException{
         // update the atf file with the new ticket available for sale
         try {
             Scanner s = new Scanner(new File("src/atf.txt"));
@@ -206,7 +208,6 @@ class Updater {
 		 while (s.hasNext()) {
 			 //get to bottom of file.
 		 }
-		 //int dif = 15 - nameB.length();
 		 fw.write(String.format("%-15s", nameB) + " " + role + " " + credit);
 		 s.close();
 		 fw.close();
@@ -235,6 +236,8 @@ class Updater {
         }
         fw.close();
         s.close();
+        s2.close();
+        fw2.close();
 	}
 
 	/**
@@ -262,49 +265,37 @@ class Updater {
             	fw.write(String.format("%-15d", seller) + " " + role + " " + String.format("%09d", Float.toString(total)));
 			}
 		}
+		s.close();
+		fw.close();
     }
 	
 	/**
 	 * @param filePath, oldString, newString
 	 */
-    static void modifyFile(String filePath, String oldString, String newString) {
+    static void modifyFile(String filePath, String oldString, String newString) throws IOException {
     	// modify the file as specified
         File fileToBeModified = new File(filePath); 
         String oldContent = "";
         BufferedReader reader = null;
         FileWriter writer = null;
          
-        try
-        {
-            reader = new BufferedReader(new FileReader(fileToBeModified));
-            //Reading all the lines of input text file into oldContent
-            String line = reader.readLine();
-            while (line != null) {
-                oldContent = oldContent + line + System.lineSeparator();
-                line = reader.readLine();
-            }
+        reader = new BufferedReader(new FileReader(fileToBeModified));
+        //Reading all the lines of input text file into oldContent
+        String line = reader.readLine();
+        while (line != null) {
+            oldContent = oldContent + line + System.lineSeparator();
+            line = reader.readLine();
+        }
              
-            //Replacing oldString with newString in the oldContent  
-            String newContent = oldContent.replaceAll(oldString, newString);
+        //Replacing oldString with newString in the oldContent  
+        String newContent = oldContent.replaceAll(oldString, newString);
              
-            //Rewriting the input text file with newContent
-            writer = new FileWriter(fileToBeModified);
-            writer.write(newContent);
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            try {
-                //Closing the resources
-                 
-                reader.close();
-                 
-                writer.close();
-            } 
-            catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        //Rewriting the input text file with newContent
+        writer = new FileWriter(fileToBeModified);
+        writer.write(newContent);
+       
+        reader.close();    
+        writer.close();
+
     }
 }
