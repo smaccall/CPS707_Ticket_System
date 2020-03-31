@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.Scanner;
 public class Main {
@@ -34,15 +33,12 @@ public class Main {
                     } else {
                         System.out.println("WAAAA");
                     }
-
                 }
             }
+			scanner.close();
 		} catch (FileNotFoundException ex) {
 			System.out.print("File not found");
-		} catch (IOException e) {
-            e.printStackTrace();
-        }
-
+		}
     }
 
 	/**
@@ -55,14 +51,11 @@ public class Main {
 		PrintWriter pw = new PrintWriter("dtf.txt"); 
 		String[] fileNames = dir.list();
 
-		
 		for (String fileName : fileNames) {
 			if (fileName.contains("dtf")) {
-				File f = new File(dir, fileName); 
-				  
+				File f = new File(dir, fileName); 	  
 	            // create object of BufferedReader 
 	            BufferedReader br = new BufferedReader(new FileReader(f));
-	  
 	            // Read from current file 
 	            String line = br.readLine(); 
 	            while (line != null) { 
@@ -76,7 +69,6 @@ public class Main {
 		}
 		pw.close();
 	}
-	
 }
 
 /**
@@ -104,7 +96,6 @@ class Updater {
         }
         fw.close();
         s.close();
-
 	}
 	/**
 	 * @param input
@@ -112,46 +103,35 @@ class Updater {
 	public void buy(String in){
 		// update the atf file with the new amount of available tickets
 		// update the uaf with buyers new credit amount
-        try 
-        {
+        try {
             Scanner s = new Scanner(new File("src/atf.txt"));
             String eTitle = in.substring(3,22).strip();
             String sName = in.substring(23,37).strip();
             String numTicketsStr = in.substring(38,41).strip();
             int numTickets = Integer.parseInt(numTicketsStr);
-            //String priceTicketStr = in.substring(42,48).strip();
-            //int priceTicket = Integer.parseInt(priceTicketStr);  
             String newLine = "";
-            while (s.hasNextLine())
-            {
+            while (s.hasNextLine()) {
                 String temp = s.nextLine();
                 String atfETitle = temp.substring(0,19).strip();
                 String atfSName = temp.substring(20,34).strip();
-                if (atfETitle.equals(eTitle) && atfSName.equals(sName))
-                {
+                if (atfETitle.equals(eTitle) && atfSName.equals(sName)) {
                     String atfnumTicketsStr = temp.substring(35,38).strip();
                     int atfnumTickets = Integer.parseInt(atfnumTicketsStr);
                     String atfpriceTicketStr = temp.substring(39,45).strip();
                     int newTotal = atfnumTickets - numTickets;
                     newLine = atfETitle + atfSName + newTotal + atfpriceTicketStr;
                     break;
-                    //int atfpriceTicket = Integer.parseInt(atfpriceTicketStr);
-                    
                 }
             }
             Updater.modifyFile("src/atf.txt", in, newLine);
             s.close();
         }
-        catch (FileNotFoundException ex)
-        {
+        catch (FileNotFoundException ex) {
             System.out.print("ERROR: <File not found>");
         }
-
-        //utf
-        try 
-        {
-            Scanner s = new Scanner(new File("utf.txt"));
-            String eTitle = in.substring(3,22).strip();
+        //uaf
+        try {
+            Scanner s = new Scanner(new File("uaf.txt"));
             String sName = in.substring(23,37).strip();
             String numTicketsStr = in.substring(38,41).strip();
             int numTickets = Integer.parseInt(numTicketsStr);
@@ -159,23 +139,19 @@ class Updater {
             int priceTicket = Integer.parseInt(priceTicketStr); 
             int totalCredit = numTickets * priceTicket; 
             String newLine = "";
-            while (s.hasNextLine())
-            {
+            while (s.hasNextLine()) {
                 String temp = s.nextLine();
-                String utfSName = temp.substring(0,15).strip();
-                if (utfSName.equals(sName))
-                {
-                    String utfType = temp.substring(16,18).strip();
-                    String utfCreditsStr = temp.substring(20,28).strip();
-                    int utfCredits = Integer.parseInt(utfCreditsStr);
-                    int newTotal = utfCredits + totalCredit;
-                    newLine = utfSName + utfType + newTotal;
+                String uafSName = temp.substring(0,15).strip();
+                if (uafSName.equals(sName)) {
+                    String uafType = temp.substring(16,18).strip();
+                    String uafCreditsStr = temp.substring(20,28).strip();
+                    int uafCredits = Integer.parseInt(uafCreditsStr);
+                    int newTotal = uafCredits + totalCredit;
+                    newLine = uafSName + uafType + newTotal;
                     break;
-                    //int atfpriceTicket = Integer.parseInt(atfpriceTicketStr);
-                    
                 }
             }
-            Updater.modifyFile("utf.txt", in, newLine);
+            Updater.modifyFile("uaf.txt", in, newLine);
             s.close();
         }
         catch (FileNotFoundException ex)
@@ -189,38 +165,30 @@ class Updater {
 	 */
 	public void sell(String in){
         // update the atf file with the new ticket available for sale
-        try 
-        {
+        try {
             Scanner s = new Scanner(new File("src/atf.txt"));
             String eTitle = in.substring(3,22).strip();
             String sName = in.substring(23,37).strip();
             String numTicketsStr = in.substring(38,41).strip();
             int numTickets = Integer.parseInt(numTicketsStr);
             String newLine = "";
-            //String priceTicketStr = in.substring(42,48).strip();
-            //int priceTicket = Integer.parseInt(priceTicketStr);  
-            while (s.hasNextLine())
-            {
+            while (s.hasNextLine()) {
                 String temp = s.nextLine();
                 String atfETitle = temp.substring(0,19).strip();
                 String atfSName = temp.substring(20,34).strip();
-                if (atfETitle.equals(eTitle) && atfSName.equals(sName))
-                {
+                if (atfETitle.equals(eTitle) && atfSName.equals(sName)) {
                     String atfnumTicketsStr = temp.substring(35,38).strip();
                     int atfnumTickets = Integer.parseInt(atfnumTicketsStr);
                     String atfpriceTicketStr = temp.substring(39,45).strip();
                     int newTotal = atfnumTickets + numTickets;
                     newLine = atfETitle + atfSName + newTotal + atfpriceTicketStr;
                     break;
-                    //int atfpriceTicket = Integer.parseInt(atfpriceTicketStr);
-                    
                 }
             }
             Updater.modifyFile("src/atf.txt", in, newLine);
             s.close();
         }
-        catch (FileNotFoundException ex)
-        {
+        catch (FileNotFoundException ex) {
             System.out.print("ERROR: <File not found>");
         }
 	}
@@ -238,8 +206,10 @@ class Updater {
 		 while (s.hasNext()) {
 			 //get to bottom of file.
 		 }
-		 int dif = 15 - nameB.length();
+		 //int dif = 15 - nameB.length();
 		 fw.write(String.format("%-15s", nameB) + " " + role + " " + credit);
+		 s.close();
+		 fw.close();
 	}
 
 	/**
@@ -254,11 +224,9 @@ class Updater {
         FileWriter fw2 = new FileWriter("src/atf.txt");
         while (s.hasNextLine()){
             String output = s.nextLine();
-            if (output.substring(0,16).equals(nameB)){
-               //do nothing
-            } else {
-                fw.write(output);
-            }
+            if (!(output.substring(0,16).equals(nameB))){
+            	fw.write(output);
+            } 
         }
         while (s2.hasNextLine()) {
             String output2 = s2.nextLine();
@@ -267,16 +235,12 @@ class Updater {
         }
         fw.close();
         s.close();
-
-        //atf
-
-
 	}
 
 	/**
 	 * @param input
 	 */
-	public void refund(String in) throws IOException{
+	public void refund(String in) throws IOException {
 		// update buyer and sellers credit amount in uaf
 		String buyer = in.substring(3,19).strip();
 		String seller = in.substring(19,35).strip();
@@ -297,16 +261,13 @@ class Updater {
 				float total = Float.parseFloat(line.substring(20,29)) - Float.parseFloat(credit);
             	fw.write(String.format("%-15d", seller) + " " + role + " " + String.format("%09d", Float.toString(total)));
 			}
-			
 		}
-		
     }
 	
 	/**
 	 * @param filePath, oldString, newString
 	 */
-    static void modifyFile(String filePath, String oldString, String newString)
-    {
+    static void modifyFile(String filePath, String oldString, String newString) {
     	// modify the file as specified
         File fileToBeModified = new File(filePath); 
         String oldContent = "";
@@ -316,41 +277,32 @@ class Updater {
         try
         {
             reader = new BufferedReader(new FileReader(fileToBeModified));
-             
             //Reading all the lines of input text file into oldContent
             String line = reader.readLine();
-            while (line != null) 
-            {
+            while (line != null) {
                 oldContent = oldContent + line + System.lineSeparator();
                 line = reader.readLine();
             }
              
-            //Replacing oldString with newString in the oldContent
-             
+            //Replacing oldString with newString in the oldContent  
             String newContent = oldContent.replaceAll(oldString, newString);
              
             //Rewriting the input text file with newContent
-             
             writer = new FileWriter(fileToBeModified);
-             
             writer.write(newContent);
         }
-        catch (IOException e)
-        {
+        catch (IOException e) {
             e.printStackTrace();
         }
-        finally
-        {
-            try
-            {
+        finally {
+            try {
                 //Closing the resources
                  
                 reader.close();
                  
                 writer.close();
             } 
-            catch (IOException e) 
-            {
+            catch (IOException e) {
                 e.printStackTrace();
             }
         }
