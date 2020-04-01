@@ -19,7 +19,6 @@ public class Main {
             while (scanner.hasNextLine()) {
                 String hold = scanner.nextLine();
                 Updater up = new Updater();
-                System.out.println(hold);
                 if (hold.length() > 0) {
                     if (hold.substring(0, 2).equals("01")) {
                         up.create(hold);
@@ -34,9 +33,9 @@ public class Main {
                     } else if (hold.substring(0, 2).equals("06")) {
                         up.addC(hold);
                     } else if (hold.substring(0, 2).equals("00")) {
-                        System.out.println("WAAAA2");
+
                     } else {
-                        System.out.println("WAAAA");
+
                     }
                 }
             }
@@ -47,7 +46,7 @@ public class Main {
     }
 
     /**
-     * @param args
+     *
      * @throws IOException merge multiple daily transaction files into one
      */
     public static void merger() throws IOException {
@@ -101,7 +100,7 @@ class Updater {
     }
 
     /**
-     * @param input
+     *
      * @throws IOException
      */
     public void buy(String in) throws IOException {
@@ -160,7 +159,7 @@ class Updater {
     }
 
     /**
-     * @param input
+     *
      * @throws IOException
      */
     public void sell(String in) throws IOException {
@@ -197,7 +196,7 @@ class Updater {
     }
 
     /**
-     * @param input
+     *
      */
     public void refund(String in) throws IOException {
         // update buyer and sellers credit amount in uaf

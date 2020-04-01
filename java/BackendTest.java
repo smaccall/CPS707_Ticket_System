@@ -18,7 +18,12 @@ public class BackendTest {
         testDelete();
         undo();
         testRefund();
-        //testModify();
+        undo();
+        testModify();
+        undo();
+        testMerger();
+        undo();
+        testMain();
     }
 
     public static void testAdd() throws IOException {
@@ -27,6 +32,9 @@ public class BackendTest {
         //statement coverage
         Assert.assertEquals(FileUtils.readLines(new File("java/output/add1_uaf_EO.txt"), "UTF-8"),
                 FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
+        //loop coverage
+
     }
 
     public static void testBuy() throws IOException {
@@ -41,22 +49,22 @@ public class BackendTest {
     }
 
 
-    public static void testSell() throws IOException{
+    public static void testSell() throws IOException {
         Updater update = new Updater();
-        update.sell("04 Little House 5      username1      009 015.00");
+        update.sell("03 Little House 5      username1      009 015.00");
         Assert.assertEquals(FileUtils.readLines(new File("java/output/sell1_atf_EO.txt"), "UTF-8"),
                 FileUtils.readLines(new File("src/atf.txt"), "UTF-8"));
     }
 
 
-    public static void testCreate() throws IOException{
+    public static void testCreate() throws IOException {
         Updater update = new Updater();
         update.create("01 usertest321     BS 000500.00");
         Assert.assertEquals(FileUtils.readLines(new File("java/output/create1_uaf_EO.txt"), "UTF-8"),
                 FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
     }
 
-    public static void testDelete() throws IOException{
+    public static void testDelete() throws IOException {
         Updater update = new Updater();
         update.delete("02 username1       FS 999000.00");
         Assert.assertEquals(FileUtils.readLines(new File("java/output/delete1_uaf_EO.txt"), "UTF-8"),
@@ -66,7 +74,7 @@ public class BackendTest {
                 FileUtils.readLines(new File("src/atf.txt"), "UTF-8"));
     }
 
-    public static void testRefund() throws IOException{
+    public static void testRefund() throws IOException {
         Updater update = new Updater();
         update.refund("05 username2      username3      000200.00");
         Assert.assertEquals(FileUtils.readLines(new File("java/output/refund1_uaf_EO.txt"), "UTF-8"),
@@ -76,6 +84,34 @@ public class BackendTest {
     public static void testModify() throws IOException {
         Updater update = new Updater();
         update.modifyFile("src/uaf.txt", "username2       BS 001000.00", "username2       BS 002000.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/add1_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+    }
+
+    public static void testMerger() throws IOException {
+        Main main = new Main();
+        main.merger();
+
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/merger1_dtf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("dtf.txt"), "UTF-8"));
+    }
+
+    public static void testMain() throws IOException {
+        Main main = new Main();
+        String[] args = null;
+        final InputStream original = System.in;
+        final FileInputStream fips = new FileInputStream(new File("java/Main.java"));
+        System.setIn(fips);
+        Main.main(args);
+        System.setIn(original);
+
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/main1_dtf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("dtf.txt"), "UTF-8"));
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/main1_atf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/atf.txt"), "UTF-8"));
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/main1_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
     }
 
     public static void undo() throws IOException {

@@ -1,3 +1,0 @@
-
-06 nomoney         FS 000500.00
-06 username2       BS 000500.00
