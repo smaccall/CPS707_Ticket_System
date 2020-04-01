@@ -4,7 +4,7 @@ public class Main {
 
 	/**
 	 * @param args
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
 		// Reads through daily transaction file to apply changes to uaf and atf
@@ -43,27 +43,27 @@ public class Main {
 
 	/**
 	 * @param args
-	 * @throws IOException 
+	 * @throws IOException
 	 * merge multiple daily transaction files into one
 	 */
 	public static void merger() throws IOException {
 		File dir = new File("src/output");
-		PrintWriter pw = new PrintWriter("dtf.txt"); 
+		PrintWriter pw = new PrintWriter("dtf.txt");
 		String[] fileNames = dir.list();
 
 		for (String fileName : fileNames) {
 			if (fileName.contains("dtf")) {
-				File f = new File(dir, fileName); 	  
-	            // create object of BufferedReader 
+				File f = new File(dir, fileName);
+	            // create object of BufferedReader
 	            BufferedReader br = new BufferedReader(new FileReader(f));
-	            // Read from current file 
-	            String line = br.readLine(); 
-	            while (line != null) { 
-	                // write to the output file 
-	                pw.println(line); 
-	                line = br.readLine(); 
-	            } 
-	            pw.flush(); 
+	            // Read from current file
+	            String line = br.readLine();
+	            while (line != null) {
+	                // write to the output file
+	                pw.println(line);
+	                line = br.readLine();
+	            }
+	            pw.flush();
 	            br.close();
 			}
 		}
@@ -99,7 +99,7 @@ class Updater {
 	}
 	/**
 	 * @param input
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void buy(String in) throws IOException{
 		// update the atf file with the new amount of available tickets
@@ -137,8 +137,8 @@ class Updater {
             String numTicketsStr = in.substring(38,41).strip();
             int numTickets = Integer.parseInt(numTicketsStr);
             String priceTicketStr = in.substring(42,48).strip();
-            int priceTicket = Integer.parseInt(priceTicketStr); 
-            int totalCredit = numTickets * priceTicket; 
+            int priceTicket = Integer.parseInt(priceTicketStr);
+            int totalCredit = numTickets * priceTicket;
             String newLine = "";
             while (s.hasNextLine()) {
                 String temp = s.nextLine();
@@ -160,10 +160,10 @@ class Updater {
             System.out.print("ERROR: <File not found>");
         }
 	}
-	
+
 	/**
 	 * @param input
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public void sell(String in) throws IOException{
         // update the atf file with the new ticket available for sale
@@ -194,7 +194,7 @@ class Updater {
             System.out.print("ERROR: <File not found>");
         }
 	}
-	
+
 	/**
 	 * @param input
 	 */
@@ -227,7 +227,7 @@ class Updater {
             String output = s.nextLine();
             if (!(output.substring(0,16).equals(nameB))){
             	fw.write(output);
-            } 
+            }
         }
         while (s2.hasNextLine()) {
             String output2 = s2.nextLine();
@@ -248,10 +248,10 @@ class Updater {
 		String buyer = in.substring(3,19).strip();
 		String seller = in.substring(19,35).strip();
 		String credit = in.substring(35).strip();
-		
+
 		Scanner s = new Scanner((new File("src/uaf.txt")));
 		FileWriter fw = new FileWriter("src/uaf.txt");
-		
+
 		while (s.hasNextLine()) {
 			String line = s.nextLine();
 			String name = line.substring(0,16).strip();
@@ -268,17 +268,17 @@ class Updater {
 		s.close();
 		fw.close();
     }
-	
+
 	/**
 	 * @param filePath, oldString, newString
 	 */
     static void modifyFile(String filePath, String oldString, String newString) throws IOException {
     	// modify the file as specified
-        File fileToBeModified = new File(filePath); 
+        File fileToBeModified = new File(filePath);
         String oldContent = "";
         BufferedReader reader = null;
         FileWriter writer = null;
-         
+
         reader = new BufferedReader(new FileReader(fileToBeModified));
         //Reading all the lines of input text file into oldContent
         String line = reader.readLine();
@@ -286,15 +286,15 @@ class Updater {
             oldContent = oldContent + line + System.lineSeparator();
             line = reader.readLine();
         }
-             
+
         //Replacing oldString with newString in the oldContent  
         String newContent = oldContent.replaceAll(oldString, newString);
-             
+
         //Rewriting the input text file with newContent
         writer = new FileWriter(fileToBeModified);
         writer.write(newContent);
-       
-        reader.close();    
+
+        reader.close();
         writer.close();
 
     }

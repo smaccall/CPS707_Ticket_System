@@ -8,21 +8,26 @@ import static org.junit.Assert.*;
 
 public class BackendTest {
     public void testAdd() throws IOException {
-        Updater update = new Updater();
+        Main main = new Main();
         File dir = new File("/output/");
         File[] dirList = dir.listFiles();
-        if (dirList != null){
-            for (File output : dirList){
-                //update.addC();
-                File input = new File("/input/"+ output.getName());
-                Assert.assertEquals(FileUtils.readLines(input), FileUtils.readLines(output));
+        Updater update = new Updater();
+        update.addC("06 username2       BS 001000.00");
 
-            }
-        }
-        //Input file to be tested in the updater method
+        //statement coverage
+        Assert.assertEquals(FileUtils.readLines(new File("add1_uad_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("placehold2.txt"), "UTF-8"));
+    }
 
-        //this compares maybe im just doing alot of googling
+    public void testBuy(){
 
+    }
+
+    public void testBuy(){
+
+    }
+
+    public void testBuy(){
 
     }
 }
