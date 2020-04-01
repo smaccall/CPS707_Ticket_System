@@ -35,6 +35,60 @@ public class BackendTest {
 
         //loop coverage
 
+        FileWriter fw = new FileWriter("src/uaf.txt");
+        fw.close();
+        update.addC("06 username2       BS 001000.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/loop0_add_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
+
+        fw = new FileWriter("src/uaf.txt");
+        fw.write("username1       FS 999000.00\n");
+        fw.close();
+        update.addC("06 username1       FS 000500.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/loop1_add_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
+
+        fw = new FileWriter("src/uaf.txt");
+        fw.write("username1       FS 999000.00\n");
+        fw.write("username2       BS 001000.00\n");
+        fw.close();
+        update.addC("06 username2       BS 000500.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/loop2_add_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
+
+        fw = new FileWriter("src/uaf.txt");
+        fw.write("username1       FS 999000.00\n");
+        fw.write("username2       BS 001000.00\n");
+        fw.write("username3       SS 000500.99\n");
+        fw.write("username4       AA 500000.00\n");
+        fw.write("admin1          AA 001500.00\n");
+        fw.write("nomoney         FS 000000.00\n");
+        fw.close();
+        update.addC("06 nomoney         FS 000500.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/loop4_add_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
+        //Decision coverage
+
+        fw = new FileWriter("src/uaf.txt");
+        fw.write("username1       FS 999000.00\n");
+        fw.write("username2       BS 001000.00\n");
+        fw.write("username3       SS 000500.99\n");
+        fw.write("username4       AA 500000.00\n");
+        fw.write("admin1          AA 001500.00\n");
+        fw.write("nomoney         FS 000000.00\n");
+        fw.close();
+
+        update.addC("06 udnoexist       BS 001000.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/d1_add_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
+
+        update.addC("06 username2       BS 001000.00");
+        Assert.assertEquals(FileUtils.readLines(new File("java/output/d2_add_uaf_EO.txt"), "UTF-8"),
+                FileUtils.readLines(new File("src/uaf.txt"), "UTF-8"));
     }
 
     public static void testBuy() throws IOException {
@@ -94,6 +148,8 @@ public class BackendTest {
 
         Assert.assertEquals(FileUtils.readLines(new File("java/output/merger1_dtf_EO.txt"), "UTF-8"),
                 FileUtils.readLines(new File("dtf.txt"), "UTF-8"));
+
+
     }
 
     public static void testMain() throws IOException {
