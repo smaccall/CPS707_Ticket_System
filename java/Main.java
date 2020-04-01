@@ -14,39 +14,36 @@ public class Main {
     public static void main(String[] args) throws IOException {
         // Reads through daily transaction file to apply changes to uaf and atf
         merger();
-        try {
-            Scanner scanner = new Scanner(new File("dtf.txt"));
-            while (scanner.hasNextLine()) {
-                String hold = scanner.nextLine();
-                Updater up = new Updater();
-                if (hold.length() > 0) {
-                    if (hold.substring(0, 2).equals("01")) {
-                        up.create(hold);
-                    } else if (hold.substring(0, 2).equals("02")) {
-                        up.delete(hold);
-                    } else if (hold.substring(0, 2).equals("03")) {
-                        up.sell(hold);
-                    } else if (hold.substring(0, 2).equals("04")) {
-                        up.buy(hold);
-                    } else if (hold.substring(0, 2).equals("05")) {
-                        up.refund(hold);
-                    } else if (hold.substring(0, 2).equals("06")) {
-                        up.addC(hold);
-                    } else if (hold.substring(0, 2).equals("00")) {
 
-                    } else {
+        Scanner scanner = new Scanner(new File("dtf.txt"));
+        while (scanner.hasNextLine()) {
+            String hold = scanner.nextLine();
+            Updater up = new Updater();
+            if (hold.length() > 0) {
+                if (hold.substring(0, 2).equals("01")) {
+                    up.create(hold);
+                } else if (hold.substring(0, 2).equals("02")) {
+                    up.delete(hold);
+                } else if (hold.substring(0, 2).equals("03")) {
+                    up.sell(hold);
+                } else if (hold.substring(0, 2).equals("04")) {
+                    up.buy(hold);
+                } else if (hold.substring(0, 2).equals("05")) {
+                    up.refund(hold);
+                } else if (hold.substring(0, 2).equals("06")) {
+                    up.addC(hold);
+                } else if (hold.substring(0, 2).equals("00")) {
 
-                    }
+                } else {
+
                 }
             }
-            scanner.close();
-        } catch (FileNotFoundException ex) {
-            System.out.print("File not found");
         }
+        scanner.close();
+
     }
 
     /**
-     *
      * @throws IOException merge multiple daily transaction files into one
      */
     public static void merger() throws IOException {
@@ -100,7 +97,6 @@ class Updater {
     }
 
     /**
-     *
      * @throws IOException
      */
     public void buy(String in) throws IOException {
@@ -159,7 +155,6 @@ class Updater {
     }
 
     /**
-     *
      * @throws IOException
      */
     public void sell(String in) throws IOException {
@@ -191,7 +186,7 @@ class Updater {
         FileUtils.writeLines(new File("src/uaf.txt"), updatedLines, false);
 
         lines = FileUtils.readLines(new File("src/atf.txt"));
-        updatedLines = lines.stream().filter(s -> !s.contains(input.substring(3,19).strip())).collect(Collectors.toList());
+        updatedLines = lines.stream().filter(s -> !s.contains(input.substring(3, 19).strip())).collect(Collectors.toList());
         FileUtils.writeLines(new File("src/atf.txt"), updatedLines, false);
     }
 
